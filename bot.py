@@ -5,7 +5,6 @@ import telegram
 import telegram.ext
 import telegram.ext.jobqueue
 from telegram.vendor.ptb_urllib3.urllib3.poolmanager import PoolManager
-from telegram.ext.dispatcher import Request
 
 # Telegram bot token
 TELEGRAM_BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
@@ -19,11 +18,8 @@ bot = telegram.Bot(token=TELEGRAM_BOT_TOKEN)
 # Create a custom pool manager with the specified connection pool size
 custom_pool_manager = PoolManager(16)  # Set the connection pool size to 16
 
-# Use the custom pool manager to create a Request object
-request = Request(custom_pool_manager=custom_pool_manager)
-
-# Create an Updater object using the Request object
-updater = telegram.ext.Updater(bot=bot, request=request)
+# Create an Updater object using the custom pool manager
+updater = telegram.ext.Updater(bot=bot, custom_pool_manager=custom_pool_manager)
 
 # Create a Dispatcher object
 dispatcher = telegram.ext.Dispatcher(bot, update_queue=updater.update_queue)
