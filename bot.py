@@ -1,7 +1,9 @@
 # Import the required modules and classes
 import os
+import telegram
 from telegram import ext
 from telegram.ext import Updater, CommandHandler
+import ytdl
 from ytdl import Ytdl
 
 # Get the Telegram bot token and yt-dlp path from the environment variables
