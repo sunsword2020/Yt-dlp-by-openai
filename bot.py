@@ -39,8 +39,8 @@ def handle_command(update: telegram.Update, context: telegram.ext.CallbackContex
 
     # Send a confirmation message to the user
     context.bot.send_message(chat_id=update.message.chat_id, text="Download started successfully!")
-
-# Register the handle_command() function as a CommandHandler
+    
+    # Register the handle_command() function as a CommandHandler
 dispatcher.add_handler(telegram.ext.CommandHandler('download', handle_command, pass_job_queue=True))
 
 # Start the Dispatcher
