@@ -38,10 +38,10 @@ def handle_command(update: telegram.Update, context: telegram.ext.CallbackContex
       return
 
     # Use `yt-dlp` to download the YouTube video
-  subprocess.run(["yt-dlp", context.args[0]])
+    subprocess.run(["yt-dlp", context.args[0]])
 
     # Send a confirmation message to the user
-  context.bot.send_message(chat_id=update.message.chat_id, text="Download started successfully!")
+    context.bot.send_message(chat_id=update.message.chat_id, text="Download started successfully!")
 
 
 # Register the handle_command() function as a CommandHandler
