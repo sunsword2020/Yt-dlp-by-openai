@@ -21,7 +21,7 @@ dispatcher = telegram.ext.Dispatcher(bot, update_queue=updater.update_queue)
 updater.start_polling()
 
 # Handle command messages
-def handle_command(update, context):
+def handle_command(update: telegram.Update, context: telegram.ext.CallbackContext):
   # Parse the command and arguments from the message text
   text = update.message.text.split()
   command = text[0]
@@ -39,6 +39,7 @@ def handle_command(update, context):
 
     # Send a confirmation message to the user
     context.bot.send_message(chat_id=update.message.chat_id, text="Download started successfully!")
+
 
 # Register the handle_command() function as a CommandHandler
 dispatcher.add_handler(telegram.ext.CommandHandler('download', handle_command))
