@@ -5,14 +5,14 @@ import telegram
 import telegram.ext
 import telegram.ext.jobqueue
 
-# Create a job queue
-job_queue = telegram.ext.jobqueue.JobQueue()
-
 # Telegram bot token
 TELEGRAM_BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
 
 # Create a Telegram bot using the `python-telegram-bot` library
 bot = telegram.Bot(token=TELEGRAM_BOT_TOKEN)
+
+# Create a job queue
+job_queue = telegram.ext.jobqueue.JobQueue()
 
 # Create an Updater object
 updater = telegram.ext.Updater(bot=bot, job_queue=job_queue)
