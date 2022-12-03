@@ -5,9 +5,6 @@ import telegram
 import telegram.ext
 import telegram.ext.jobqueue
 
-# Telegram bot token
-TELEGRAM_BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
-
 # Create a job queue
 job_queue = telegram.ext.jobqueue.JobQueue()
 
@@ -17,8 +14,11 @@ TELEGRAM_BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
 # Create a Telegram bot using the `python-telegram-bot` library
 bot = telegram.Bot(token=TELEGRAM_BOT_TOKEN)
 
+# Create an Updater object
+updater = telegram.ext.Updater(bot=bot, job_queue=job_queue)
+
 # Create a Dispatcher object
-dispatcher = telegram.ext.Dispatcher(bot)
+dispatcher = telegram.ext.Dispatcher(bot, update_queue=updater.update_queue)
 
 # Handle command messages
 def handle_command(update: telegram.Update, context: telegram.ext.CallbackContext):
@@ -39,7 +39,6 @@ def handle_command(update: telegram.Update, context: telegram.ext.CallbackContex
 
     # Send a confirmation message to the user
     context.bot.send_message(chat_id=update.message.chat_id, text="Download started successfully!")
-
 
 # Register the handle_command() function as a CommandHandler
 dispatcher.add_handler(telegram.ext.CommandHandler('download', handle_command))
