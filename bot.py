@@ -20,9 +20,6 @@ bot = telegram.Bot(token=TELEGRAM_BOT_TOKEN)
 # Create a Dispatcher object
 dispatcher = telegram.ext.Dispatcher(bot, update_queue=updater.update_queue)
 
-# Start the Updater
-updater.start_polling()
-
 # Handle command messages
 def handle_command(update: telegram.Update, context: telegram.ext.CallbackContext):
   # Parse the command and arguments from the message text
