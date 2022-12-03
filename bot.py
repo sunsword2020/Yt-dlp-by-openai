@@ -1,11 +1,15 @@
 # Import the required modules and classes
 import os
+import subprocess
 import telegram
 import telegram.ext
 import telegram.ext.jobqueue
-from telegram.ext import Updater, CommandHandler
-import yt_dlp
 
+# Telegram bot token
+TELEGRAM_BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
+
+# Create a job queue
+job_queue = telegram.ext.jobqueue.JobQueue()
 # Create a job queue
 job_queue = telegram.ext.jobqueue.JobQueue()
 
@@ -14,9 +18,6 @@ TELEGRAM_BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
 
 # Create a Telegram bot using the `python-telegram-bot` library
 bot = telegram.Bot(token=TELEGRAM_BOT_TOKEN)
-
-# Create an Updater object
-updater = telegram.ext.Updater(bot=bot)
 
 # Create a Dispatcher object
 dispatcher = telegram.ext.Dispatcher(bot, update_queue=updater.update_queue)
@@ -39,7 +40,7 @@ def handle_command(update: telegram.Update, context: telegram.ext.CallbackContex
       return
 
     # Use `yt-dlp` to download the YouTube video
-    video = yt_dlp.download(args[0])
+  subprocess.run(["yt-dlp", context.args[0]])
 
     # Send a confirmation message to the user
     context.bot.send_message(chat_id=update.message.chat_id, text="Download started successfully!")
