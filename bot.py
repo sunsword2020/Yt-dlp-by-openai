@@ -1,9 +1,13 @@
 # Import the required modules and classes
 import os
 import telegram
-from telegram import ext
+import telegram.ext
+import telegram.ext.queue
 from telegram.ext import Updater, CommandHandler
 import yt_dlp
+
+# Create an update queue
+update_queue = telegram.ext.queue.Queue()
 
 # Telegram bot token
 TELEGRAM_BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
