@@ -10,8 +10,6 @@ TELEGRAM_BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
 
 # Create a job queue
 job_queue = telegram.ext.jobqueue.JobQueue()
-# Create a job queue
-job_queue = telegram.ext.jobqueue.JobQueue()
 
 # Telegram bot token
 TELEGRAM_BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
