@@ -4,40 +4,38 @@ import telegram
 from telegram import ext
 from telegram.ext import Updater, CommandHandler
 import ytdl
-from ytdl import Ytdl
 
-# Get the Telegram bot token and yt-dlp path from the environment variables
-token = os.environ['TELEGRAM_BOT_TOKEN']
-ytdl_path = os.environ['YTDL_PATH']
+# Telegram bot token
+TELEGRAM_BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
 
-# Create a Ytdl object with the specified path
-ytdl = Ytdl(ytdl_path)
+# Create a Telegram bot using the `python-telegram-bot` library
+bot = telegram.Bot(token=TELEGRAM_BOT_TOKEN)
 
-# Define the /download command handler
-def download(update, context):
-    # Get the URL of the video to download from the command arguments
-    url = context.args[0]
+# Create a Dispatcher object
+dispatcher = telegram.ext.Dispatcher(bot)
 
-    # Use the Ytdl object to download the video
-    ytdl.download(url)
+# Handle command messages
+def handle_command(update, context):
+  # Parse the command and arguments from the message text
+  text = update.message.text.split()
+  command = text[0]
+  args = text[1:]
 
-    # Send a message to the user to confirm that the download has started
-    update.message.reply_text('Download started!')
+  # Download a YouTube video
+  if command == '/download':
+    # Check if the user provided a YouTube URL
+    if len(args) == 0:
+      context.bot.send_message(chat_id=update.message.chat_id, text="Please provide a YouTube URL to download.")
+      return
 
-# Create an Updater object with the bot token
-updater = Updater(token, use_context=True)
+    # Use `yt-dlp` to download the YouTube video
+    video = ytdl.download(args[0])
 
-# Get the dispatcher for the Updater object
-dispatcher = updater.dispatcher
+    # Send a confirmation message to the user
+    context.bot.send_message(chat_id=update.message.chat_id, text="Download started successfully!")
 
-# Create a CommandHandler for the /download command
-download_handler = CommandHandler('download', download)
+# Register the handle_command() function as a CommandHandler
+dispatcher.add_handler(telegram.ext.CommandHandler('download', handle_command))
 
-# Add the CommandHandler to the dispatcher
-dispatcher.add_handler(download_handler)
-
-# Start the bot
-updater.start_polling()
-
-# Start the bot
-bot.start_polling()
+# Start the Dispatcher
+dispatcher.start()
