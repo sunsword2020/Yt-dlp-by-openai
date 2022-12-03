@@ -11,8 +11,14 @@ TELEGRAM_BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
 # Create a Telegram bot using the `python-telegram-bot` library
 bot = telegram.Bot(token=TELEGRAM_BOT_TOKEN)
 
+# Create an Updater object
+updater = telegram.ext.Updater(bot=bot)
+
 # Create a Dispatcher object
-dispatcher = telegram.ext.Dispatcher(bot)
+dispatcher = telegram.ext.Dispatcher(bot, update_queue=updater.update_queue)
+
+# Start the Updater
+updater.start_polling()
 
 # Handle command messages
 def handle_command(update, context):
@@ -29,7 +35,7 @@ def handle_command(update, context):
       return
 
     # Use `yt-dlp` to download the YouTube video
-    video = ytdl.download(args[0])
+    video = yt_dlp.download(args[0])
 
     # Send a confirmation message to the user
     context.bot.send_message(chat_id=update.message.chat_id, text="Download started successfully!")
