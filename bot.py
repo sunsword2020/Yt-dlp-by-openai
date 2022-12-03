@@ -3,7 +3,7 @@ import os
 import telegram
 from telegram import ext
 from telegram.ext import Updater, CommandHandler
-import ytdl
+import yt_dlp
 
 # Telegram bot token
 TELEGRAM_BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
