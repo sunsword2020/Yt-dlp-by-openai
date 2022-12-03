@@ -43,5 +43,8 @@ def handle_command(update: telegram.Update, context: telegram.ext.CallbackContex
     # Register the handle_command() function as a CommandHandler
 dispatcher.add_handler(telegram.ext.CommandHandler('download', handle_command))
 
+# Set the connection pool size using the set_con_pool_size() method
+dispatcher.set_con_pool_size(16)  # Set the connection pool size to 16
+
 # Start the Dispatcher
 dispatcher.start()
