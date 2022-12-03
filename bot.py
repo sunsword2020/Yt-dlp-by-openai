@@ -2,12 +2,12 @@
 import os
 import telegram
 import telegram.ext
-import telegram.ext.queue
+import telegram.ext.jobqueue
 from telegram.ext import Updater, CommandHandler
 import yt_dlp
 
-# Create an update queue
-update_queue = telegram.ext.queue.Queue()
+# Create a job queue
+job_queue = telegram.ext.jobqueue.JobQueue()
 
 # Telegram bot token
 TELEGRAM_BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
