@@ -15,14 +15,13 @@ job_queue = telegram.ext.jobqueue.JobQueue()
 bot = telegram.Bot(token=TELEGRAM_BOT_TOKEN)
 
 # Create an Updater object
-updater = telegram.ext.Updater(bot=bot, job_queue=job_queue)
+updater = telegram.ext.Updater(bot=bot)
 
 # Create a Dispatcher object
-dispatcher = updater.dispatcher
+dispatcher = telegram.ext.Dispatcher(bot, update_queue=updater.update_queue)
 
 # Handle command messages
-def handle_command(update: telegram.Update, context: telegram.ext.CallbackContext):
-  
+def handle_command(update: telegram.Update, context: telegram.ext.CallbackContext, job_queue):
   # Parse the command and arguments from the message text
   text = update.message.text.split()
   command = text[0]
@@ -36,11 +35,11 @@ def handle_command(update: telegram.Update, context: telegram.ext.CallbackContex
       return
 
     # Use `yt-dlp` to download the YouTube video
-    subprocess.run(["yt-dlp", context.args[0]], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    subprocess.run(["yt-dlp", context.args[0]])
 
     # Send a confirmation message to the user
     context.bot.send_message(chat_id=update.message.chat_id, text="Download started successfully!")
-    
+
     # Register the handle_command() function as a CommandHandler
 dispatcher.add_handler(telegram.ext.CommandHandler('download', handle_command))
 
