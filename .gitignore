@@ -1,0 +1,15 @@
+# Python bytecode files
+*.pyc
+__pycache__/
+
+# Environment variable files
+.env
+
+# Virtual environment directories
+venv/
+.venv/
+env/
+.env/
+
+# Ignore the .DS_Store files created by macOS
+.DS_Store
