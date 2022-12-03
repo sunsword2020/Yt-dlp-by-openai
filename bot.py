@@ -5,6 +5,7 @@ import telegram
 import telegram.ext
 import telegram.ext.jobqueue
 from telegram.vendor.ptb_urllib3.urllib3.poolmanager import PoolManager
+from telegram.ext.dispatcher import Request
 
 # Telegram bot token
 TELEGRAM_BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
